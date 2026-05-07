@@ -2,7 +2,17 @@ const API_BASE = "http://127.0.0.1:8000";
 
 export async function fetchQuestion() {
   const response = await fetch(
-    `${API_BASE}/question`
+    `${API_BASE}/question`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        role: "Frontend Developer",
+        difficulty: "easy",
+      }),
+    }
   );
 
   if (!response.ok) {
