@@ -1,31 +1,13 @@
 from fastapi import APIRouter
 
-from app.schemas.interview_schema import (
-    QuestionRequest,
-    QuestionResponse
-)
-
-from app.services.question_service import (
-    QuestionService
+from app.api.controllers.interview_controller import (
+    generate_question
 )
 
 router = APIRouter()
 
-question_service = QuestionService()
-
-@router.post(
-    "/question",
-    response_model=QuestionResponse
+router.post(
+    "/question"
+)(
+    generate_question
 )
-async def generate_question(
-    request: QuestionRequest
-):
-
-    question = await question_service.generate_question(
-        request.role,
-        request.difficulty
-    )
-
-    return {
-        "question": question
-    }
