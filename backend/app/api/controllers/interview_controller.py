@@ -20,4 +20,4 @@ async def generate_question(
 
     return {
         "question": question
-    }
+    }#this is the json format in which we will return the question to client/fetch command in frontend

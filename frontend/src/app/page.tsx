@@ -10,6 +10,8 @@ const page = () => {
   const [question,setQuestion]=useState("");
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<any>(null);
+  const [isEvaluating, setIsEvaluating]=useState(false);
+  const [error, setError] = useState("");
   useEffect(()=>{
     loadQuestion();
   },[]);
@@ -21,21 +23,24 @@ const page = () => {
       console.error(error);
     }
   }
-  async function handleSubmit(){
-    try {
-      const result = await submitAnswer(
-        question,
-        answer
-      );
-
-      setFeedback(result);
-      setAnswer("");
-    } catch (error) {
-      console.error(error);
-    }
+  async function handleSubmit() {
+  try {
+    setIsEvaluating(true);
+    const result = await submitAnswer(
+      question,
+      answer
+    );
+    setFeedback(result);
+  } catch (error) {
+  setError(
+    "Failed to evaluate answer"
+  );
+} finally {
+    setIsEvaluating(false);
   }
+}
   return (
-    <div className='max-w-3xl mx-auto bg-blue-300 px-5 space-y-6'>
+    <div className='max-w-3xl mx-auto px-5 space-y-6'>
       <h1 className='text-3xl font-bold'>
         AI INTERVIEWER
       </h1>
@@ -47,6 +52,20 @@ const page = () => {
       <SubmitButton onClick={handleSubmit} />
       {/* conditional rendering  */}
       {/* only shows feedback when feedback is not null */}
+      {
+        isEvaluating && (
+          <p className="text-blue-500 font-medium">
+            Evaluating answer...
+          </p>
+        )
+      }
+      {
+        error && (
+          <p className="text-red-500">
+            {error}
+          </p>
+        )
+      }
       {
         feedback&&(
           <FeedbackCard
