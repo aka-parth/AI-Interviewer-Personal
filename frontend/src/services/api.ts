@@ -1,22 +1,35 @@
-const API_BASE = "http://127.0.0.1:8000";
+import {
+  QuestionResponse,
+} from "../types/interview";
 
-export async function fetchQuestion() {
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://127.0.0.1:8000";
+
+export async function fetchQuestion(
+  role: string,
+  difficulty: string
+): Promise<QuestionResponse> {
+
   const response = await fetch(
     `${API_BASE}/question`,
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type":
+          "application/json",
       },
       body: JSON.stringify({
-        role: "Frontend Developer",
-        difficulty: "easy",
+        role,
+        difficulty,
       }),
     }
   );
 
   if (!response.ok) {
-    throw new Error("Failed to fetch question");
+    throw new Error(
+      "Failed to fetch question"
+    );
   }
 
   return response.json();
