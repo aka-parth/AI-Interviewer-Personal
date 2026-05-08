@@ -27,9 +27,7 @@ class OpenAIService:
                 }
             ],
             temperature=0.7,
-            response_format={
-                "type": "json_object"
-            }
+            #response_format={"type": "json_object"}    #COMMENTED THIS OUT CAUSE IT WAS CAUSING TROUBLE IN QUESTION GENERATION(response is in string and not json)
         )
 
         return response.choices[0].message.content # it will return actual ai response

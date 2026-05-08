@@ -22,7 +22,8 @@ class QuestionService:
         )
 
         question = await openai_service.generate_response(
-            prompt
-        )
+            system_prompt="You are an expert technical interviewer who asks concise and realistic interview questions.",
+            user_prompt=prompt
+        )   
 
         return question

@@ -16,7 +16,6 @@ const page = () => {
   const [feedback, setFeedback] = useState<any>(null);
   const [isEvaluating, setIsEvaluating]=useState(false);
   const [error, setError] = useState("");
-  setSelectedRole("Backend Developer")
   async function loadQuestion() {
   try {
     setIsLoading(true);
@@ -53,7 +52,8 @@ const page = () => {
       <h1 className='text-3xl font-bold'>
         AI INTERVIEWER
       </h1>
-      <RoleSelector selectedRole={selectedRole}setSelectedRole={setSelectedRole}/>
+      <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole}/>
+      <DifficultySelector selectedDifficulty={selectedDifficulty} setSelectedDifficulty={setSelectedDifficulty}/>
       <button onClick={loadQuestion} disabled={isLoading} className=" bg-black text-white px-5 py-3 rounded-xl">
   {
     isLoading
