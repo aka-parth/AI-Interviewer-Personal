@@ -11,23 +11,33 @@ class OpenAIService:
     async def generate_response(
         self,
         system_prompt: str,
-        user_prompt: str
+        user_prompt: str,
+        json_mode:bool=False
     ):
 
-        response = await client.chat.completions.create(
-            model=settings.MODEL_NAME,
-            messages=[
+        params = {
+            "model": settings.MODEL_NAME,
+            "messages": [
                 {
                     "role": "system",
                     "content": system_prompt
                 },
                 {
-                    "role": "user",#roles can be system,user assistant
+                    "role": "user",
                     "content": user_prompt
                 }
             ],
-            temperature=0.7,
-            #response_format={"type": "json_object"}    #COMMENTED THIS OUT CAUSE IT WAS CAUSING TROUBLE IN QUESTION GENERATION(response is in string and not json)
+            "temperature": 0.7
+        }
+
+        if json_mode:
+
+            params["response_format"] = {
+                "type": "json_object"
+            }
+
+        response = await client.chat.completions.create(
+            **params
         )
 
         return response.choices[0].message.content # it will return actual ai response

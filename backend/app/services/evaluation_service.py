@@ -28,7 +28,8 @@ class EvaluationService:
 
             response = await openai_service.generate_response(
                 system_prompt=EVALUATION_SYSTEM_PROMPT,
-                user_prompt=user_prompt
+                user_prompt=user_prompt,
+                json_mode=True
             )
             cleaned_response = (
                 response
